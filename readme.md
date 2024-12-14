@@ -1,1 +1,1 @@
-
+se tiver erro ao rodar o catalina.sh, rodar dentro da pasta do tomcat/bin: `chmod 755 *.sh`
