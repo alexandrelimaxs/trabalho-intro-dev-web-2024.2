@@ -14,30 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.math.BigDecimal;
 import entidade.Turma;
 
-public class TurmaDAO {
+public class TurmaDAO implements Dao<Turma> {
 
-    public void Inserir(Turma turma) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota) VALUES (?,?,?,?,?)"
-            );
-            sql.setInt(1, turma.getProfessorId());
-            sql.setInt(2, turma.getDisciplinaId());
-            sql.setInt(3, turma.getAlunoId());
-            sql.setString(4, turma.getCodigoTurma());
-            sql.setBigDecimal(5, turma.getNota());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir turma: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public Turma getTurma(int id) throws Exception {
+    @Override
+    public Turma get(int id) {
         Conexao conexao = new Conexao();
         Turma turma = new Turma();
         try {
@@ -54,50 +37,16 @@ public class TurmaDAO {
                 turma.setCodigoTurma(resultado.getString("codigo_turma"));
                 turma.setNota(resultado.getBigDecimal("nota"));
             }
-            return turma;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao obter turma: " + e.getMessage());
         } finally {
             conexao.closeConexao();
         }
+        return turma;
     }
 
-    public void Alterar(Turma turma) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "UPDATE turmas SET professor_id=?, disciplina_id=?, aluno_id=?, codigo_turma=?, nota=? WHERE id=?"
-            );
-            sql.setInt(1, turma.getProfessorId());
-            sql.setInt(2, turma.getDisciplinaId());
-            sql.setInt(3, turma.getAlunoId());
-            sql.setString(4, turma.getCodigoTurma());
-            sql.setBigDecimal(5, turma.getNota());
-            sql.setInt(6, turma.getId());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao alterar turma: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public void Excluir(Turma turma) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "DELETE FROM turmas WHERE id=?"
-            );
-            sql.setInt(1, turma.getId());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir turma: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public ArrayList<Turma> ListaDeTurmas() throws Exception {
+    @Override
+    public ArrayList<Turma> getAll() {
         ArrayList<Turma> minhasTurmas = new ArrayList<>();
         Conexao conexao = new Conexao();
         try {
@@ -120,5 +69,62 @@ public class TurmaDAO {
             conexao.closeConexao();
         }
         return minhasTurmas;
+    }
+
+    @Override
+    public void insert(Turma turma) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota) VALUES (?,?,?,?,?)"
+            );
+            sql.setInt(1, turma.getProfessorId());
+            sql.setInt(2, turma.getDisciplinaId());
+            sql.setInt(3, turma.getAlunoId());
+            sql.setString(4, turma.getCodigoTurma());
+            sql.setBigDecimal(5, turma.getNota());
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir turma: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+
+    @Override
+    public void update(Turma turma) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "UPDATE turmas SET professor_id=?, disciplina_id=?, aluno_id=?, codigo_turma=?, nota=? WHERE id=?"
+            );
+            sql.setInt(1, turma.getProfessorId());
+            sql.setInt(2, turma.getDisciplinaId());
+            sql.setInt(3, turma.getAlunoId());
+            sql.setString(4, turma.getCodigoTurma());
+            sql.setBigDecimal(5, turma.getNota());
+            sql.setInt(6, turma.getId());
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar turma: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "DELETE FROM turmas WHERE id=?"
+            );
+            sql.setInt(1, id);
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao excluir turma: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
     }
 }

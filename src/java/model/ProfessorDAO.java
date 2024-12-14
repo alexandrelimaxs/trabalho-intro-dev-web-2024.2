@@ -16,27 +16,10 @@ import java.util.ArrayList;
 
 import entidade.Professor;
 
-public class ProfessorDAO {
+public class ProfessorDAO implements Dao<Professor> {
 
-    public void Inserir(Professor professor) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "INSERT INTO professores (nome, email, cpf, senha) VALUES (?,?,?,?)"
-            );
-            sql.setString(1, professor.getNome());
-            sql.setString(2, professor.getEmail());
-            sql.setString(3, professor.getCpf());
-            sql.setString(4, professor.getSenha());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir professor: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public Professor getProfessor(int id) throws Exception {
+    @Override
+    public Professor get(int id) {
         Conexao conexao = new Conexao();
         Professor professor = new Professor();
         try {
@@ -52,49 +35,16 @@ public class ProfessorDAO {
                 professor.setCpf(resultado.getString("cpf"));
                 professor.setSenha(resultado.getString("senha"));
             }
-            return professor;
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao obter professor por ID: " + e.getMessage());
+            throw new RuntimeException("Erro ao obter professor: " + e.getMessage());
         } finally {
             conexao.closeConexao();
         }
+        return professor;
     }
 
-    public void Alterar(Professor professor) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "UPDATE professores SET nome = ?, email = ?, cpf = ?, senha = ? WHERE id = ?"
-            );
-            sql.setString(1, professor.getNome());
-            sql.setString(2, professor.getEmail());
-            sql.setString(3, professor.getCpf());
-            sql.setString(4, professor.getSenha());
-            sql.setInt(5, professor.getId());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao alterar professor: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public void Excluir(Professor professor) throws Exception {
-        Conexao conexao = new Conexao();
-        try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                "DELETE FROM professores WHERE id = ?"
-            );
-            sql.setInt(1, professor.getId());
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir professor: " + e.getMessage());
-        } finally {
-            conexao.closeConexao();
-        }
-    }
-
-    public ArrayList<Professor> ListaDeProfessores() throws Exception {
+    @Override
+    public ArrayList<Professor> getAll() {
         ArrayList<Professor> meusProfessores = new ArrayList<>();
         Conexao conexao = new Conexao();
         try {
@@ -118,7 +68,63 @@ public class ProfessorDAO {
         return meusProfessores;
     }
 
-    public Professor Logar(Professor professor) throws Exception {
+    @Override
+    public void insert(Professor professor) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "INSERT INTO professores (nome, email, cpf, senha) VALUES (?,?,?,?)"
+            );
+            sql.setString(1, professor.getNome());
+            sql.setString(2, professor.getEmail());
+            sql.setString(3, professor.getCpf());
+            sql.setString(4, professor.getSenha());
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir professor: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+
+    @Override
+    public void update(Professor professor) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "UPDATE professores SET nome=?, email=?, cpf=?, senha=? WHERE id=?"
+            );
+            sql.setString(1, professor.getNome());
+            sql.setString(2, professor.getEmail());
+            sql.setString(3, professor.getCpf());
+            sql.setString(4, professor.getSenha());
+            sql.setInt(5, professor.getId());
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar professor: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement(
+                "DELETE FROM professores WHERE id=?"
+            );
+            sql.setInt(1, id);
+            sql.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao excluir professor: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+
+    // Método extra não definido na interface Dao, mantido caso necessário
+    public Professor Logar(Professor professor) {
         Conexao conexao = new Conexao();
         Professor professorObtido = new Professor();
         try {
@@ -135,12 +141,11 @@ public class ProfessorDAO {
                 professorObtido.setCpf(resultado.getString("cpf"));
                 professorObtido.setSenha(resultado.getString("senha"));
             }
-            return professorObtido;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao logar professor: " + e.getMessage());
         } finally {
             conexao.closeConexao();
         }
+        return professorObtido;
     }
-
 }
