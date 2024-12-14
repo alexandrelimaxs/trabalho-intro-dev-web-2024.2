@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import java.math.BigDecimal;
 import entidade.Turma;
+import model.Relatorio;
 
 public class TurmaDAO implements Dao<Turma> {
 
@@ -127,4 +128,37 @@ public class TurmaDAO implements Dao<Turma> {
             conexao.closeConexao();
         }
     }
+    
+    public ArrayList<Relatorio> getRelatorio() throws Exception {
+    ArrayList<Relatorio> lista = new ArrayList<>();
+    Conexao conexao = new Conexao();
+    try {
+        String sql = "SELECT d.nome AS disciplina, p.nome AS professor, a.nome AS aluno, a.cpf AS cpfAluno, t.codigo_turma, t.nota " +
+                     "FROM turmas t " +
+                     "JOIN disciplina d ON t.disciplina_id = d.id " +
+                     "JOIN professores p ON t.professor_id = p.id " +
+                     "JOIN alunos a ON t.aluno_id = a.id " +
+                     "ORDER BY d.nome, a.nome";
+
+        PreparedStatement preparedStatement = conexao.getConexao().prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs != null && rs.next()) {
+            Relatorio dr = new Relatorio();
+            dr.setNomeDisciplina(rs.getString("disciplina"));
+            dr.setNomeProfessor(rs.getString("professor"));
+            dr.setNomeAluno(rs.getString("aluno"));
+            dr.setCpfAluno(rs.getString("cpfAluno"));
+            dr.setCodigoTurma(rs.getString("codigo_turma"));
+            dr.setNota(rs.getBigDecimal("nota"));
+            lista.add(dr);
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao gerar relatório: " + e.getMessage());
+    } finally {
+        conexao.closeConexao();
+    }
+    return lista;
 }
+
+}
+

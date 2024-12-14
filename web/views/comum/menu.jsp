@@ -19,6 +19,7 @@
                             <a class="nav-link" href="/aplicacaoMVC/admin/administradores?acao=Listar">Administradores</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/turmas?acao=Listar">Turmas</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/disciplinas?acao=Listar">Disciplinas</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/relatorio?acao=Gerar">Relatório</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
                             
                 <%  } else { %>
