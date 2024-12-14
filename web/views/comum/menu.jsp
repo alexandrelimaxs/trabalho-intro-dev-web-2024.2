@@ -15,8 +15,12 @@
                         if (AdministradorLogado != null) { %>
                             <a class="nav-link" href="/aplicacaoMVC/admin/dashboard">Dashboard</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController?acao=Listar">Alunos</a>
-                            <a class="nav-link" href="/aplicacaoMVC/admin/CategoriaController?acao=Listar">Categorias</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/professores?acao=Listar">Professores</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/administradores?acao=Listar">Administradores</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/turmas?acao=Listar">Turmas</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/disciplinas?acao=Listar">Disciplinas</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
+                            
                 <%  } else { %>
                 
                             <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a>
