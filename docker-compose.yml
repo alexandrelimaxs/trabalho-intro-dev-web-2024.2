@@ -5,8 +5,8 @@ services:
     image: mysql:latest  # Usando a imagem mais recente do MySQL
     container_name: mysql-container  # Nome do container
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  # Senha do usuário root
-      MYSQL_DATABASE: mydatabase  # Nome do banco de dados a ser criado (opcional)
+      MYSQL_ROOT_PASSWORD: 123456  # Senha do usuário root
+      MYSQL_DATABASE: dbjava  # Nome do banco de dados a ser criado (opcional)
     ports:
       - "3306:3306"  # Mapeando a porta do MySQL (para acesso externo)
     volumes:
