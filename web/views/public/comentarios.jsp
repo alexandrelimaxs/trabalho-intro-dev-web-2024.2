@@ -12,8 +12,9 @@
         <link href="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.min.css"  rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <jsp:include page="../comum/menu.jsp" />
+        <jsp:include page="../comum/menu.jsp" />
+        <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 80vh">
+
             <div class="mt-5">
                 <h1>Comentários dos usuários</h1>
 

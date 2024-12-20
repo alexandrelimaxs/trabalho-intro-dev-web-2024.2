@@ -7,6 +7,7 @@ public class Administrador {
     private String cpf;
     private String endereco;
     private String senha;
+    private String aprovado; // 's' para aprovado, 'n' ou outro valor para não aprovado
 
     public Administrador(String nome, String cpf, String endereco, String senha) {
         this.nome = nome;
@@ -66,6 +67,14 @@ public class Administrador {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getAprovado() {
+        return aprovado;
+    }
+
+    public void setAprovado(String aprovado) {
+        this.aprovado = aprovado;
     }
 
 }

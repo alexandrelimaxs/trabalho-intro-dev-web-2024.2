@@ -53,18 +53,19 @@ public class AutenticaController extends HttpServlet {
                 throw new RuntimeException("Falha na query para Logar");
             }
 
-            if (administradorObtido.getId() != 0) {
+            if (administradorObtido.getId() != 0 && "s".equals(administradorObtido.getAprovado())) {
+                // Administrador existe e está aprovado
                 HttpSession session = request.getSession();
                 session.setAttribute("administrador", administradorObtido);
-
+            
                 rd = request.getRequestDispatcher("/admin/dashboard");
                 rd.forward(request, response);
-
+            
             } else {
-                request.setAttribute("msgError", "Usuário e/ou senha incorreto");
+                // Ou o administrador não existe (id=0) ou não está aprovado (aprovado != 's')
+                request.setAttribute("msgError", "Usuário não aprovado ou usuário/senha incorreto");
                 rd = request.getRequestDispatcher("/views/autenticacao/formLogin.jsp");
                 rd.forward(request, response);
-
             }
         }
     }

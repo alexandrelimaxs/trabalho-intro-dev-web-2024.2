@@ -126,30 +126,33 @@ public class AdministradorDAO implements Dao<Administrador> {
     }
 
     // Método extra, não faz parte da interface Dao<T>, mas pode ser útil para lógica de login
-    public Administrador Logar(Administrador administrador) {
+    public Administrador Logar(Administrador administrador) throws Exception {
         Conexao conexao = new Conexao();
-        Administrador administradorObtido = new Administrador();
         try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement(
-                    "SELECT * FROM administrador WHERE cpf=? AND senha=? LIMIT 1");
+            PreparedStatement sql = conexao.getConexao().prepareStatement("SELECT * FROM administrador WHERE cpf=? and senha=? LIMIT 1");
             sql.setString(1, administrador.getCpf());
             sql.setString(2, administrador.getSenha());
             ResultSet resultado = sql.executeQuery();
-            if (resultado != null && resultado.next()) {
-                administradorObtido.setId(resultado.getInt("ID"));
-                administradorObtido.setNome(resultado.getString("NOME"));
-                administradorObtido.setCpf(resultado.getString("CPF"));
-                administradorObtido.setEndereco(resultado.getString("ENDERECO"));
-                administradorObtido.setSenha(resultado.getString("SENHA"));
+            Administrador administradorObtido = new Administrador();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    administradorObtido.setId(resultado.getInt("ID"));
+                    administradorObtido.setNome(resultado.getString("NOME"));
+                    administradorObtido.setCpf(resultado.getString("CPF"));
+                    administradorObtido.setEndereco(resultado.getString("ENDERECO"));
+                    administradorObtido.setSenha(resultado.getString("SENHA"));
+                    administradorObtido.setAprovado(resultado.getString("APROVADO")); // carregar o campo aprovado
+                }
             }
             return administradorObtido;
-
+    
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new RuntimeException("Erro ao logar administrador: " + e.getMessage());
+            throw new RuntimeException("Query de select (get) incorreta");
         } finally {
             conexao.closeConexao();
         }
     }
+    
 
 }

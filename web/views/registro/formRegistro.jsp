@@ -10,9 +10,9 @@
         <link href="views/bootstrap/bootstrap.min.css"  rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <jsp:include page="../comum/menu.jsp" />
-            <div class="col-sm-6 offset-3 mt-5">
+        <jsp:include page="../comum/menu.jsp" />
+        <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 80vh">
+            <div class="col-sm-6 mt-5">
 
                 <h3>Registro</h3>
 
@@ -41,7 +41,7 @@
                         <input type="password" name="senha" value="111" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="senha" class="form-label">Redigite a senha</label>
+                        <label for="senha" class="form-label">Confirme a senha</label>
                         <input type="password" name="senha2" value="111" class="form-control">
                     </div>
                     <div class="row">

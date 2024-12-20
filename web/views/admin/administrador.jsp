@@ -26,30 +26,41 @@
                </div>
             <% } %>
 
-            <!-- Formulário para inclusão de novo administrador -->
-            <form action="/aplicacaoMVC/admin/administradores?acao=Incluir" method="POST" class="mb-4">
+            <% Administrador adminEdicao = (Administrador) request.getAttribute("adminEdicao"); %>
+
+            <form action="/aplicacaoMVC/admin/administradores" method="POST" class="mb-4">
+                <input type="hidden" name="acao" value="<%= (adminEdicao != null) ? "Alterar" : "Incluir" %>">
+                <% if (adminEdicao != null) { %>
+                    <input type="hidden" name="id" value="<%= adminEdicao.getId() %>">
+                <% } %>
+
                 <div class="row">
                     <div class="col-sm-3">
-                        <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+                        <input type="text" name="nome" class="form-control" placeholder="Nome" required
+                               value="<%= (adminEdicao != null) ? adminEdicao.getNome() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
+                        <input type="text" name="cpf" class="form-control" placeholder="CPF" required
+                               value="<%= (adminEdicao != null) ? adminEdicao.getCpf() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="endereco" class="form-control" placeholder="Endereço" required>
+                        <input type="text" name="endereco" class="form-control" placeholder="Endereço" required
+                               value="<%= (adminEdicao != null) ? adminEdicao.getEndereco() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="senha" class="form-control" placeholder="Senha" required>
+                        <input type="password" name="senha" class="form-control" placeholder="Senha" required
+                               value="<%= (adminEdicao != null) ? adminEdicao.getSenha() : "" %>">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-3">
-                        <input type="submit" value="Incluir Administrador" class="btn btn-primary">
+                        <input type="submit"
+                               value="<%= (adminEdicao != null) ? "Alterar Administrador" : "Incluir Administrador" %>"
+                               class="btn btn-primary">
                     </div>
                 </div>
             </form>
 
-            <!-- Listagem de administradores -->
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -75,6 +86,7 @@
                         <td><%= a.getSenha() %></td>
                         <td>
                             <a href="/aplicacaoMVC/admin/administradores?acao=Excluir&id=<%= a.getId() %>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/aplicacaoMVC/admin/administradores?acao=AlterarForm&id=<%= a.getId() %>" class="btn btn-warning btn-sm">Alterar</a>
                         </td>
                     </tr>
                     <%
@@ -88,3 +100,4 @@
         <script src="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.bundle.min.js"></script>
     </body>
 </html>
+

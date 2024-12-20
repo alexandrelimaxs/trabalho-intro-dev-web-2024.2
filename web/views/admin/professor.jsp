@@ -26,25 +26,37 @@
                </div>
             <% } %>
 
-            <!-- Formulário para inclusão de novo professor -->
-            <form action="/aplicacaoMVC/admin/professores?acao=Incluir" method="POST" class="mb-4">
+            <% Professor professorEdicao = (Professor) request.getAttribute("professorEdicao"); %>
+
+            <form action="/aplicacaoMVC/admin/professores" method="POST" class="mb-4">
+                <input type="hidden" name="acao" value="<%= (professorEdicao != null) ? "Alterar" : "Incluir" %>">
+                <% if (professorEdicao != null) { %>
+                    <input type="hidden" name="id" value="<%= professorEdicao.getId() %>">
+                <% } %>
+
                 <div class="row">
                     <div class="col-sm-3">
-                        <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+                        <input type="text" name="nome" class="form-control" placeholder="Nome" required
+                               value="<%= (professorEdicao != null) ? professorEdicao.getNome() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="email" class="form-control" placeholder="Email" required>
+                        <input type="email" name="email" class="form-control" placeholder="Email" required
+                               value="<%= (professorEdicao != null) ? professorEdicao.getEmail() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
+                        <input type="text" name="cpf" class="form-control" placeholder="CPF" required
+                               value="<%= (professorEdicao != null) ? professorEdicao.getCpf() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="senha" class="form-control" placeholder="Senha" required>
+                        <input type="password" name="senha" class="form-control" placeholder="Senha" required
+                               value="<%= (professorEdicao != null) ? professorEdicao.getSenha() : "" %>">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-3">
-                        <input type="submit" value="Incluir Professor" class="btn btn-primary">
+                        <input type="submit" 
+                               value="<%= (professorEdicao != null) ? "Alterar Professor" : "Incluir Professor" %>" 
+                               class="btn btn-primary">
                     </div>
                 </div>
             </form>
@@ -75,6 +87,7 @@
                         <td><%= p.getSenha() %></td>
                         <td>
                             <a href="/aplicacaoMVC/admin/professores?acao=Excluir&id=<%= p.getId() %>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/aplicacaoMVC/admin/professores?acao=AlterarForm&id=<%= p.getId() %>" class="btn btn-warning btn-sm">Alterar</a>
                         </td>
                     </tr>
                     <%

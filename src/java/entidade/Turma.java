@@ -9,18 +9,15 @@ package entidade;
  * @author alexandre-colmenero
  */
 
-import java.math.BigDecimal;
-
 public class Turma {
     private int id;
     private int professorId;
     private int disciplinaId;
     private int alunoId;
     private String codigoTurma;
-    private BigDecimal nota; // para decimais, geralmente BigDecimal é recomendado
+    private float nota;
 
-    // Construtor completo (exceto ID, que é auto-increment)
-    public Turma(int professorId, int disciplinaId, int alunoId, String codigoTurma, BigDecimal nota) {
+    public Turma(int professorId, int disciplinaId, int alunoId, String codigoTurma, float nota) {
         this.professorId = professorId;
         this.disciplinaId = disciplinaId;
         this.alunoId = alunoId;
@@ -28,20 +25,20 @@ public class Turma {
         this.nota = nota;
     }
 
-    // Construtor padrão
     public Turma() {
         this.id = 0;
         this.professorId = 0;
         this.disciplinaId = 0;
         this.alunoId = 0;
         this.codigoTurma = "";
-        this.nota = BigDecimal.ZERO;
+        this.nota = 0f;
     }
 
     // Getters e Setters
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -49,6 +46,7 @@ public class Turma {
     public int getProfessorId() {
         return professorId;
     }
+
     public void setProfessorId(int professorId) {
         this.professorId = professorId;
     }
@@ -56,6 +54,7 @@ public class Turma {
     public int getDisciplinaId() {
         return disciplinaId;
     }
+
     public void setDisciplinaId(int disciplinaId) {
         this.disciplinaId = disciplinaId;
     }
@@ -63,6 +62,7 @@ public class Turma {
     public int getAlunoId() {
         return alunoId;
     }
+
     public void setAlunoId(int alunoId) {
         this.alunoId = alunoId;
     }
@@ -70,14 +70,16 @@ public class Turma {
     public String getCodigoTurma() {
         return codigoTurma;
     }
+
     public void setCodigoTurma(String codigoTurma) {
         this.codigoTurma = codigoTurma;
     }
 
-    public BigDecimal getNota() {
+    public float getNota() {
         return nota;
     }
-    public void setNota(BigDecimal nota) {
+
+    public void setNota(float nota) {
         this.nota = nota;
     }
 }

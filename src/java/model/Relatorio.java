@@ -9,7 +9,6 @@ package model;
  * @author alexandre-colmenero
  */
 
-import java.math.BigDecimal;
 
 public class Relatorio {
     private String nomeDisciplina;
@@ -17,7 +16,7 @@ public class Relatorio {
     private String nomeAluno;
     private String cpfAluno;
     private String codigoTurma;
-    private BigDecimal nota;
+    private Float nota;
 
     // Getters e Setters
     public String getNomeDisciplina() { return nomeDisciplina; }
@@ -35,7 +34,7 @@ public class Relatorio {
     public String getCodigoTurma() { return codigoTurma; }
     public void setCodigoTurma(String codigoTurma) { this.codigoTurma = codigoTurma; }
 
-    public BigDecimal getNota() { return nota; }
-    public void setNota(BigDecimal nota) { this.nota = nota; }
+    public Float getNota() { return nota; }
+    public void setNota(Float nota) { this.nota = nota; }
 }
 

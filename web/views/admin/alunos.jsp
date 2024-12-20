@@ -29,40 +29,57 @@
                </div>
             <% } %>
 
-            <!-- Formulário para inclusão de novo aluno -->
-            <form action="/aplicacaoMVC/admin/AlunoController?acao=Incluir" method="POST" class="mb-4">
+            <% Aluno alunoEdicao = (Aluno) request.getAttribute("alunoEdicao"); %>
+
+            <!-- Formulário para inclusão ou alteração de aluno -->
+            <!-- Se alunoEdicao não for nulo, estamos editando, senão incluindo -->
+            <form action="/aplicacaoMVC/admin/AlunoController" method="POST" class="mb-4">
+                <input type="hidden" name="acao" value="<%= (alunoEdicao != null) ? "Alterar" : "Incluir" %>">
+                <% if (alunoEdicao != null) { %>
+                    <input type="hidden" name="id" value="<%= alunoEdicao.getId() %>">
+                <% } %>
+
                 <div class="row">
                     <div class="col-sm-3">
-                        <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+                        <input type="text" name="nome" class="form-control" placeholder="Nome" 
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getNome() : "" %>" required>
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="email" class="form-control" placeholder="Email" required>
+                        <input type="email" name="email" class="form-control" placeholder="Email"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getEmail() : "" %>" required>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="celular" class="form-control" placeholder="Celular" required>
+                        <input type="text" name="celular" class="form-control" placeholder="Celular" 
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getCelular() : "" %>" required>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
+                        <input type="text" name="cpf" class="form-control" placeholder="CPF" 
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getCpf() : "" %>" required>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="senha" class="form-control" placeholder="Senha" required>
+                        <input type="text" name="senha" class="form-control" placeholder="Senha"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getSenha() : "" %>" required>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-3">
-                        <input type="text" name="endereco" class="form-control" placeholder="Endereço">
+                        <input type="text" name="endereco" class="form-control" placeholder="Endereço"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getEndereco() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="cidade" class="form-control" placeholder="Cidade">
+                        <input type="text" name="cidade" class="form-control" placeholder="Cidade"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getCidade() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="bairro" class="form-control" placeholder="Bairro">
+                        <input type="text" name="bairro" class="form-control" placeholder="Bairro"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getBairro() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="cep" class="form-control" placeholder="CEP">
+                        <input type="text" name="cep" class="form-control" placeholder="CEP"
+                               value="<%= (alunoEdicao != null) ? alunoEdicao.getCep() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="submit" value="Incluir Aluno" class="btn btn-primary">
+                        <input type="submit" value="<%= (alunoEdicao != null) ? "Alterar Aluno" : "Incluir Aluno" %>" class="btn btn-primary">
                     </div>
                 </div>
             </form>
@@ -101,6 +118,7 @@
                         <td><%= a.getCep() %></td>
                         <td>
                             <a href="/aplicacaoMVC/admin/AlunoController?acao=Excluir&id=<%= a.getId() %>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/aplicacaoMVC/admin/AlunoController?acao=AlterarForm&id=<%= a.getId() %>" class="btn btn-warning btn-sm">Alterar</a>
                         </td>
                     </tr>
                     <%
@@ -114,4 +132,3 @@
         <script src="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.bundle.min.js"></script>
     </body>
 </html>
-

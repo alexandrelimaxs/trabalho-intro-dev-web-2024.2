@@ -26,30 +26,41 @@
                </div>
             <% } %>
 
-            <!-- Formulário para inclusão de nova disciplina -->
-            <form action="/aplicacaoMVC/admin/disciplinas?acao=Incluir" method="POST" class="mb-4">
+            <% Disciplina discEdicao = (Disciplina) request.getAttribute("discEdicao"); %>
+
+            <form action="/aplicacaoMVC/admin/disciplinas" method="POST" class="mb-4">
+                <input type="hidden" name="acao" value="<%= (discEdicao != null) ? "Alterar" : "Incluir" %>">
+                <% if (discEdicao != null) { %>
+                    <input type="hidden" name="id" value="<%= discEdicao.getId() %>">
+                <% } %>
+
                 <div class="row">
                     <div class="col-sm-3">
-                        <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+                        <input type="text" name="nome" class="form-control" placeholder="Nome" required
+                               value="<%= (discEdicao != null) ? discEdicao.getNome() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="requisito" class="form-control" placeholder="Requisito">
+                        <input type="text" name="requisito" class="form-control" placeholder="Requisito"
+                               value="<%= (discEdicao != null) ? discEdicao.getRequisito() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="ementa" class="form-control" placeholder="Ementa">
+                        <input type="text" name="ementa" class="form-control" placeholder="Ementa"
+                               value="<%= (discEdicao != null) ? discEdicao.getEmenta() : "" %>">
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" name="carga_horaria" class="form-control" placeholder="Carga Horária (opcional)">
+                        <input type="number" name="carga_horaria" class="form-control" placeholder="Carga Horária (opcional)" min="0"
+                               value="<%= (discEdicao != null && discEdicao.getCargaHoraria() != null) ? discEdicao.getCargaHoraria() : "" %>">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-sm-3">
-                        <input type="submit" value="Incluir Disciplina" class="btn btn-primary">
+                        <input type="submit"
+                               value="<%= (discEdicao != null) ? "Alterar Disciplina" : "Incluir Disciplina" %>"
+                               class="btn btn-primary">
                     </div>
                 </div>
             </form>
 
-            <!-- Listagem de disciplinas -->
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -75,6 +86,7 @@
                         <td><%= d.getCargaHoraria() != null ? d.getCargaHoraria() : "" %></td>
                         <td>
                             <a href="/aplicacaoMVC/admin/disciplinas?acao=Excluir&id=<%= d.getId() %>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/aplicacaoMVC/admin/disciplinas?acao=AlterarForm&id=<%= d.getId() %>" class="btn btn-warning btn-sm">Alterar</a>
                         </td>
                     </tr>
                     <%

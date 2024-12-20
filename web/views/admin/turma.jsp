@@ -26,31 +26,43 @@
                </div>
             <% } %>
 
-            <!-- Formulário para inclusão de nova turma -->
-            <form action="/aplicacaoMVC/admin/turmas?acao=Incluir" method="POST" class="mb-4">
+            <% Turma turmaEdicao = (Turma) request.getAttribute("turmaEdicao"); %>
+
+            <form action="/aplicacaoMVC/admin/turmas" method="POST" class="mb-4">
+                <input type="hidden" name="acao" value="<%= (turmaEdicao != null) ? "Alterar" : "Incluir" %>">
+                <% if (turmaEdicao != null) { %>
+                    <input type="hidden" name="id" value="<%= turmaEdicao.getId() %>">
+                <% } %>
+
                 <div class="row">
                     <div class="col-sm-2">
-                        <input type="text" name="professor_id" class="form-control" placeholder="Professor ID" required>
+                        <input type="number" name="professor_id" class="form-control" placeholder="Professor ID" required min="0"
+                               value="<%= (turmaEdicao != null) ? turmaEdicao.getProfessorId() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="disciplina_id" class="form-control" placeholder="Disciplina ID" required>
+                        <input type="number" name="disciplina_id" class="form-control" placeholder="Disciplina ID" required min="0"
+                               value="<%= (turmaEdicao != null) ? turmaEdicao.getDisciplinaId() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="aluno_id" class="form-control" placeholder="Aluno ID" required>
+                        <input type="number" name="aluno_id" class="form-control" placeholder="Aluno ID" required min="0"
+                               value="<%= (turmaEdicao != null) ? turmaEdicao.getAlunoId() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="codigo_turma" class="form-control" placeholder="Código Turma" required>
+                        <input type="text" name="codigo_turma" class="form-control" placeholder="Código Turma" required
+                               value="<%= (turmaEdicao != null) ? turmaEdicao.getCodigoTurma() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="nota" class="form-control" placeholder="Nota" required>
+                        <input type="number" step="0.01" name="nota" class="form-control" placeholder="Nota" required min="0"
+                               value="<%= (turmaEdicao != null) ? turmaEdicao.getNota() : "" %>">
                     </div>
                     <div class="col-sm-2">
-                        <input type="submit" value="Incluir Turma" class="btn btn-primary">
+                        <input type="submit"
+                               value="<%= (turmaEdicao != null) ? "Alterar Turma" : "Incluir Turma" %>"
+                               class="btn btn-primary">
                     </div>
                 </div>
             </form>
 
-            <!-- Listagem de turmas -->
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -78,6 +90,7 @@
                         <td><%= t.getNota() %></td>
                         <td>
                             <a href="/aplicacaoMVC/admin/turmas?acao=Excluir&id=<%= t.getId() %>" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/aplicacaoMVC/admin/turmas?acao=AlterarForm&id=<%= t.getId() %>" class="btn btn-warning btn-sm">Alterar</a>
                         </td>
                     </tr>
                     <%

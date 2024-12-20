@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import java.math.BigDecimal;
 import entidade.Turma;
 import model.Relatorio;
 
@@ -36,7 +35,7 @@ public class TurmaDAO implements Dao<Turma> {
                 turma.setDisciplinaId(resultado.getInt("disciplina_id"));
                 turma.setAlunoId(resultado.getInt("aluno_id"));
                 turma.setCodigoTurma(resultado.getString("codigo_turma"));
-                turma.setNota(resultado.getBigDecimal("nota"));
+                turma.setNota(resultado.getFloat("nota"));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao obter turma: " + e.getMessage());
@@ -61,7 +60,7 @@ public class TurmaDAO implements Dao<Turma> {
                 turma.setDisciplinaId(resultado.getInt("disciplina_id"));
                 turma.setAlunoId(resultado.getInt("aluno_id"));
                 turma.setCodigoTurma(resultado.getString("codigo_turma"));
-                turma.setNota(resultado.getBigDecimal("nota"));
+                turma.setNota(resultado.getFloat("nota"));
                 minhasTurmas.add(turma);
             }
         } catch (SQLException e) {
@@ -83,7 +82,7 @@ public class TurmaDAO implements Dao<Turma> {
             sql.setInt(2, turma.getDisciplinaId());
             sql.setInt(3, turma.getAlunoId());
             sql.setString(4, turma.getCodigoTurma());
-            sql.setBigDecimal(5, turma.getNota());
+            sql.setFloat(5, turma.getNota());
             sql.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir turma: " + e.getMessage());
@@ -103,7 +102,7 @@ public class TurmaDAO implements Dao<Turma> {
             sql.setInt(2, turma.getDisciplinaId());
             sql.setInt(3, turma.getAlunoId());
             sql.setString(4, turma.getCodigoTurma());
-            sql.setBigDecimal(5, turma.getNota());
+            sql.setFloat(5, turma.getNota());
             sql.setInt(6, turma.getId());
             sql.executeUpdate();
         } catch (SQLException e) {
@@ -149,7 +148,7 @@ public class TurmaDAO implements Dao<Turma> {
             dr.setNomeAluno(rs.getString("aluno"));
             dr.setCpfAluno(rs.getString("cpfAluno"));
             dr.setCodigoTurma(rs.getString("codigo_turma"));
-            dr.setNota(rs.getBigDecimal("nota"));
+            dr.setNota(rs.getFloat("nota"));
             lista.add(dr);
         }
     } catch (SQLException e) {
