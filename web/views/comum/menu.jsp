@@ -51,7 +51,7 @@
                     } else if (profLogado != null) {
                 %>
                     <a class="nav-link" href="/aplicacaoMVC/professor/ProfessorAreaController?acao=home">Home Professor</a>
-                    <!-- etc. Ajuste conforme suas funcionalidades do professor -->
+                    <a class="nav-link" href="/aplicacaoMVC/professor/ProfessorAreaController?acao=listarNotas">Minhas Notas/Turmas</a>
 
                 <%
                     // Senão, ninguém logado => exibe somente o link de login

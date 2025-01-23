@@ -271,4 +271,92 @@ public class TurmaDAO implements Dao<Turma> {
         return lista;
     }
 
+    public ArrayList<ProfessorTurmaDTO> getAllByProfessor(int professorId) {
+        ArrayList<ProfessorTurmaDTO> lista = new ArrayList<>();
+        Conexao conexao = new Conexao();
+        try {
+            // Traz cada linha da tabela turmas + join com disciplina + join com aluno
+            // SOMENTE para professor_id = ?
+            String sql = "SELECT t.id AS turmaId, t.codigo_turma, t.nota, "
+                    + "d.nome AS nomeDisciplina, "
+                    + "a.id AS alunoId, a.nome AS nomeAluno "
+                    + "FROM turmas t "
+                    + "JOIN disciplina d ON t.disciplina_id = d.id "
+                    + "JOIN alunos a ON t.aluno_id = a.id "
+                    + "WHERE t.professor_id = ? "
+                    + "ORDER BY t.codigo_turma, a.nome";
+
+            PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
+            ps.setInt(1, professorId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ProfessorTurmaDTO dto = new ProfessorTurmaDTO();
+                dto.setTurmaId(rs.getInt("turmaId"));
+                dto.setCodigoTurma(rs.getString("codigo_turma"));
+                dto.setNota(rs.getFloat("nota"));
+                dto.setNomeDisciplina(rs.getString("nomeDisciplina"));
+                dto.setAlunoId(rs.getInt("alunoId"));
+                dto.setNomeAluno(rs.getString("nomeAluno"));
+                lista.add(dto);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar turmas do professor: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+        return lista;
+    }
+
+    public ProfessorTurmaDTO getOneByProfessor(int professorId, int turmaId) {
+        Conexao conexao = new Conexao();
+        ProfessorTurmaDTO dto = null;
+        try {
+            String sql = "SELECT t.id AS turmaId, t.codigo_turma, t.nota, "
+                    + "d.nome AS nomeDisciplina, "
+                    + "a.id AS alunoId, a.nome AS nomeAluno "
+                    + "FROM turmas t "
+                    + "JOIN disciplina d ON t.disciplina_id = d.id "
+                    + "JOIN alunos a ON t.aluno_id = a.id "
+                    + "WHERE t.professor_id = ? AND t.id = ? "
+                    + "LIMIT 1";
+
+            PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
+            ps.setInt(1, professorId);
+            ps.setInt(2, turmaId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                dto = new ProfessorTurmaDTO();
+                dto.setTurmaId(rs.getInt("turmaId"));
+                dto.setCodigoTurma(rs.getString("codigo_turma"));
+                dto.setNota(rs.getFloat("nota"));
+                dto.setNomeDisciplina(rs.getString("nomeDisciplina"));
+                dto.setAlunoId(rs.getInt("alunoId"));
+                dto.setNomeAluno(rs.getString("nomeAluno"));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao obter turma do professor: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+        return dto;
+    }
+
+    public void updateNota(int turmaId, float novaNota) {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement ps = conexao.getConexao().prepareStatement(
+                "UPDATE turmas SET nota = ? WHERE id = ?"
+            );
+            ps.setFloat(1, novaNota);
+            ps.setInt(2, turmaId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar nota: " + e.getMessage());
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+    
 }
