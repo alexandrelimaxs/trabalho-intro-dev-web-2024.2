@@ -57,7 +57,7 @@
                                value="<%= (alunoEdicao != null) ? alunoEdicao.getCpf() : "" %>" required>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" name="senha" class="form-control" placeholder="Senha"
+                        <input type="password" name="senha" class="form-control" placeholder="Senha"
                                value="<%= (alunoEdicao != null) ? alunoEdicao.getSenha() : "" %>" required>
                     </div>
                 </div>
