@@ -13,8 +13,7 @@
                 </head>
 
                 <body>
-                    <div class="container-fluid">
-                        <jsp:include page="../comum/menu.jsp" />
+                    <jsp:include page="../comum/menu.jsp" />
                         <div class="container">
                             <h3 class="mt-5">Gerenciamento de Administradores</h3>
 
@@ -27,8 +26,8 @@
                                     <% Administrador adminEdicao=(Administrador) request.getAttribute("adminEdicao"); %>
 
                                         <form action="/aplicacaoMVC/admin/administradores" method="POST" class="mb-4">
-                                            <input type="hidden" name="acao" value="<%= (adminEdicao != null) ? "
-                                                Alterar" : "Incluir" %>">
+                                            <c:set var="acao" value="${adminEdicao != null ? 'Alterar' : 'Incluir'}" />
+                                            <input type="hidden" name="acao" value="${acao}" />
                                             <% if (adminEdicao !=null) { %>
                                                 <input type="hidden" name="id" value="<%= adminEdicao.getId() %>">
                                                 <% } %>
@@ -57,8 +56,7 @@
                                                     </div>
                                                     <div class="row mt-3">
                                                         <div class="col-sm-3">
-                                                            <input type="submit" value="<%= (adminEdicao != null) ? "
-                                                                Alterar Administrador" : "Incluir Administrador" %>"
+                                                            <input type="submit" value="<%= (adminEdicao != null) ? "Alterar Administrador" : "Incluir Administrador" %>"
                                                             class="btn btn-primary">
                                                         </div>
                                                     </div>
@@ -109,7 +107,6 @@
                                         </table>
 
                         </div>
-                    </div>
                     <script src="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.bundle.min.js"></script>
                 </body>
 

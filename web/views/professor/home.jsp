@@ -9,8 +9,8 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-            <jsp:include page="../comum/menu.jsp" />
+        <jsp:include page="../comum/menu.jsp" />
+        <div class="container">
 
             <h1 class="mt-4">Bem-vindo(a) à Área do Professor</h1>
             <p>Aqui você poderá gerenciar as notas dos alunos nas turmas em que você leciona.</p>

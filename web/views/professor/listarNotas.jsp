@@ -11,8 +11,8 @@
             </head>
 
             <body>
-                <div class="container-fluid">
-                    <jsp:include page="../comum/menu.jsp" />
+                <jsp:include page="../comum/menu.jsp" />
+                <div class="container">
 
                     <h3 class="mt-4">Notas de Alunos em Minhas Turmas</h3>
 

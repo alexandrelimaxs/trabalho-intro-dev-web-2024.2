@@ -15,8 +15,8 @@
         <link href="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.min.css"  rel="stylesheet">
     </head>
     <body>
+        <jsp:include page="../comum/menu.jsp" />
         <div class="container">
-            <jsp:include page="../comum/menu.jsp" />
             <h3 class="mt-5">Gerenciamento de Disciplinas</h3>
 
             <% String msg = (String) request.getAttribute("msg");

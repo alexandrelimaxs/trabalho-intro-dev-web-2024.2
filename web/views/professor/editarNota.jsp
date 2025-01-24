@@ -10,8 +10,8 @@
         </head>
 
         <body>
-            <div class="container-fluid">
-                <jsp:include page="../comum/menu.jsp" />
+            <jsp:include page="../comum/menu.jsp" />
+            <div class="container">
 
                 <h3 class="mt-4">Editar Nota do Aluno</h3>
 

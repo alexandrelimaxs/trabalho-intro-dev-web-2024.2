@@ -17,8 +17,8 @@
         <link href="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.min.css"  rel="stylesheet">
     </head>
     <body>
+        <jsp:include page="../comum/menu.jsp" />
         <div class="container">
-            <jsp:include page="../comum/menu.jsp" />
             <h3 class="mt-5">Gerenciamento de Alunos</h3>
 
             <!-- Mensagem de erro ou sucesso -->
