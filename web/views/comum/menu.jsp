@@ -13,12 +13,27 @@
         alunoLogado = (Aluno) sessao.getAttribute("aluno");
         profLogado = (Professor) sessao.getAttribute("professor");
     }
+
+    String homeLink;
+    if (adminLogado != null) {
+        homeLink = request.getContextPath() + "/admin/dashboard"; 
+    } else if (alunoLogado != null) {
+        homeLink = request.getContextPath() + "/aluno/AlunoAreaController?acao=home"; 
+    } else if (profLogado != null) {
+        homeLink = request.getContextPath() + "/professor/ProfessorAreaController?acao=home"; 
+    } else {
+        // Ninguém logado => redirecionar para home pública
+        homeLink = request.getContextPath() + "/home?acao=home";
+    }
 %>
 
 <!-- Navbar que ocupa 100% da largura (container-fluid), removendo link de Comentários -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/aplicacaoMVC/home">Home</a>
+
+        <!-- (1) ÚNICO link de Home -> o destino muda dependendo do cargo -->
+        <a class="navbar-brand" href="<%= homeLink %>">Home</a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -27,37 +42,31 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav me-auto">
                 <%
-                    // Se for administrador logado, mostra links de admin
+                    // (2) Tira o link "Home Aluno"/"Home Professor" e mantém só as demais
                     if (adminLogado != null) {
                 %>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/dashboard">Dashboard</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/AlunoController?acao=Listar">Alunos</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/professores?acao=Listar">Professores</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/administradores?acao=Listar">Administradores</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/turmas?acao=Listar">Turmas</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/disciplinas?acao=Listar">Disciplinas</a>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/relatorio?acao=Gerar">Relatório</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/AlunoController?acao=Listar">Alunos</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/professores?acao=Listar">Professores</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/administradores?acao=Listar">Administradores</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/turmas?acao=Listar">Turmas</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/disciplinas?acao=Listar">Disciplinas</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/relatorio?acao=Gerar">Relatório</a>
 
                 <%
-                    // Se for aluno logado, mostra links de aluno
                     } else if (alunoLogado != null) {
                 %>
-                    <a class="nav-link" href="/aplicacaoMVC/aluno/AlunoAreaController?acao=home">Home Aluno</a>
-                    <a class="nav-link" href="/aplicacaoMVC/aluno/AlunoAreaController?acao=listarTurmas">Listar Turmas</a>
-                    <a class="nav-link" href="/aplicacaoMVC/aluno/AlunoAreaController?acao=historico">Histórico</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/aluno/AlunoAreaController?acao=listarTurmas">Listar Turmas</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/aluno/AlunoAreaController?acao=historico">Histórico</a>
 
                 <%
-                    // Se for professor logado, mostra links de professor (caso ainda vá implementar)
                     } else if (profLogado != null) {
                 %>
-                    <a class="nav-link" href="/aplicacaoMVC/professor/ProfessorAreaController?acao=home">Home Professor</a>
-                    <a class="nav-link" href="/aplicacaoMVC/professor/ProfessorAreaController?acao=listarNotas">Minhas Notas/Turmas</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/professor/ProfessorAreaController?acao=listarNotas">Minhas Notas/Turmas</a>
 
                 <%
-                    // Senão, ninguém logado => exibe somente o link de login
                     } else {
                 %>
-                    <a class="nav-link" href="/aplicacaoMVC/AutenticaController?acao=Login">Login</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/AutenticaController?acao=Login">Login</a>
                 <%
                     }
                 %>
@@ -67,7 +76,7 @@
                     // Se QUALQUER um estiver logado (admin/aluno/prof), exibir logout
                     if (adminLogado != null || alunoLogado != null || profLogado != null) {
                 %>
-                    <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/logOut">Logout</a>
                 <%
                     }
                 %>
@@ -75,3 +84,4 @@
         </div>
     </div>
 </nav>
+
