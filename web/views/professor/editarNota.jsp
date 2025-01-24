@@ -46,7 +46,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Nota</label>
                                 <input type="number" step="0.01" name="nota" class="form-control"
-                                    value="<%= turmaAluno.getNota() %>">
+                                    value="<%= turmaAluno.getNota() %>" min="0" max="10">
                             </div>
 
                             <button type="submit" class="btn btn-primary">Salvar Nota</button>

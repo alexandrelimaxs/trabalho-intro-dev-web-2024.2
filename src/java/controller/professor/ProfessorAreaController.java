@@ -89,6 +89,14 @@ public class ProfessorAreaController extends HttpServlet {
                 int turmaId = Integer.parseInt(request.getParameter("id"));
                 float nota = Float.parseFloat(request.getParameter("nota"));
 
+                if (nota < 0f || nota > 10f) {
+                    request.setAttribute("msg", "Nota inválida! Deve estar entre 0 e 10.");
+                    // Recarrega o form ou volta para a listagem
+                    RequestDispatcher rd2 = request.getRequestDispatcher("/professor/ProfessorAreaController?acao=listarNotas");
+                    rd2.forward(request, response);
+                    return;
+                }
+
                 // Atualiza no BD
                 turmaDAO.updateNota(turmaId, nota);
 
