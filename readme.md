@@ -22,8 +22,6 @@ Supondo um projeto NetBeans, temos a seguinte estrutura principal:
 
 # Estrutura de Pastas - aplicacaoMVC
 
-# Estrutura de Pastas - aplicacaoMVC
-
 ```plaintext
 aplicacaoMVC/
 ├── src/
