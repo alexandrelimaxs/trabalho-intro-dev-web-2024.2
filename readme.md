@@ -1,6 +1,6 @@
 # Documentação do Projeto – Aplicação MVC em Java (Servlet + JSP) -  Trabalho de Introdução ao Desenvolvimento Web - SI UFF - 2024.2
 
-Este projeto foi desenvolvido como trabalho final da matéria de Introdução ao Desenvolvimento Web com Leonardo Cruz, do curso de Sistemas de Informação UFF, com o objetivo de construir uma aplicação web para gerenciar uma **Escola**, contemplando as seguintes entidades: **Alunos**, **Professores**, **Administradores**, **Disciplinas**, **Turmas** e **Relatórios**. A arquitetura segue o padrão **MVC (Model–View–Controller)**, utilizando **Servlets** e **JSP** para a camada de controle e visualização, e o **MySQL** como banco de dados.
+Este projeto foi desenvolvido como [trabalho final da matéria de Introdução ao Desenvolvimento Web](https://github.com/alexandrelimaxs/trabalho-intro-dev-web-2024.2/blob/9033b7e4d1f846be6ceacb3e351d9727d882a1d3/Trabalho%202024.2.pdf) com Leonardo Cruz, do curso de Sistemas de Informação UFF, com o objetivo de construir uma aplicação web para gerenciar uma **Escola**, contemplando as seguintes entidades: **Alunos**, **Professores**, **Administradores**, **Disciplinas**, **Turmas** e **Relatórios**. A arquitetura segue o padrão **MVC (Model–View–Controller)**, utilizando **Servlets** e **JSP** para a camada de controle e visualização, e o **MySQL** como banco de dados.
 
 ---
 
